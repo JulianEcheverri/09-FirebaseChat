@@ -22,8 +22,8 @@ export class ChatService {
     this.afuth.authState.subscribe(user => {
       console.log('Estado del usuario', user);
       if (!user) return;
-      this.usuario.nombre = user.displayName;
       this.usuario.uid = user.uid;
+      this.usuario.nombre = user.displayName;
     });
 
 
@@ -34,6 +34,7 @@ export class ChatService {
   }
   logout() {
     this.afuth.signOut();
+    this.usuario = {};
   }
 
   // no se realiza en el constructor pues se inyectara el servicio cuando sea necesario
@@ -62,9 +63,10 @@ export class ChatService {
   agregarMensaje(texto: string) {
     // creamos un objeto del tipo de nuestra interface
     let mensaje: Mensaje = {
-      nombre: 'Demo',
+      userid: this.usuario.uid,
+      nombre: this.usuario.nombre,
       mensaje: texto,
-      fecha: new Date().getTime()
+      fecha: new Date().getTime(),
     }
     // lo añadimos a nuestra coleccion de firebase la cual regresa un promise
     // si se inserta hace el metodo then, sino el catch

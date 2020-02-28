@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import "firebase/firestore";
+import { ChatService } from 'src/app/providers/chat.service';
 
 @Component({
   selector: "app-root",
@@ -12,7 +13,10 @@ export class AppComponent {
   title = "FireChat";
   public chats: Observable<any[]>;
 
-  constructor(firestore: AngularFirestore) {
-    this.chats = firestore.collection("chats").valueChanges();
+  // importar el servicio del chat para determinar cuando el usuario esta loggeado
+
+  constructor(firestore: AngularFirestore, public chatService: ChatService) {
+
+
   }
 }
